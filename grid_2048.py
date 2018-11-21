@@ -9,6 +9,7 @@ THEMES = {"0": {"name": "Default", 0: "", 2: "2", 4: "4", 8: "8", 16: "16", 32: 
                 512: "I", 1024: "J", 2048: "K", 4096: "L", 8192: "M"}}
 
 
+# Returns an empty grid with the chosen size
 def create_grid(size):
     game_grid = []
     for i in range(size):
@@ -16,6 +17,7 @@ def create_grid(size):
     return game_grid
 
 
+# Returns a list of every tile in the grid
 def get_all_tiles(grid):
     tiles = []
     for x in grid:
@@ -27,10 +29,12 @@ def get_all_tiles(grid):
     return tiles
 
 
+# Returns a value for a randomly filled tile
 def get_value_new_tile():
     return random.choices([2, 4], [0.9, 0.1])[0]
 
 
+# Returns a list of tuples of coordinates corresponding to the empty tiles
 def get_empty_tiles_positions(grid):
     empty_tiles = []
     for x in range(len(grid)):
@@ -40,17 +44,20 @@ def get_empty_tiles_positions(grid):
     return empty_tiles
 
 
+# Returns a randomly chosen tuple of coordinates corresponding to an empty tile
 def get_new_position(grid):
     xy = random.choices(get_empty_tiles_positions(grid))[0]
     return xy[0], xy[1]
 
 
+# Returns the value of the tile with coordinates x,y
 def grid_get_value(grid, x, y):
     if grid[x][y] == " ":
         return 0
     return grid[x][y]
 
 
+# Fills an empty tile with a randomly chosen value
 def grid_add_new_tile(grid):
     x, y = get_new_position(grid)
     new_grid = copy.deepcopy(grid)
@@ -65,51 +72,52 @@ def init_game(size):
     return grid
 
 
+# Returns a string that shows the current 4x4 game grid - most basic display
 def grid_to_string(grid):
-    affichage = ""
-    barre = " ===" * len(grid[0])
-    barre += "\n"
+    display = ""
+    bar = " ===" * len(grid[0])
+    bar += "\n"
     for x in grid:
-        affichage += barre
+        display += bar
         for xy in x:
             if xy in [" ", 0]:
-                affichage += "| 0 "
+                display += "| 0 "
             else:
                 if xy < 10:
-                    affichage += "| {} ".format(xy)
+                    display += "| {} ".format(xy)
                 elif xy < 100:
-                    affichage += "|{} ".format(xy)
+                    display += "|{} ".format(xy)
                 else:
-                    affichage += "|{}".format(xy)
-        affichage += "|\n"
-    affichage += barre
-    return affichage
+                    display += "|{}".format(xy)
+        display += "|\n"
+    display += bar
+    return display
 
 
 def grid_to_string_with_size(grid, size):
     if long_value(grid) <= 3:
         return grid_to_string(grid)
     else:
-        affichage = ""
-        barre = " ====" * len(grid[0])
-        barre += "\n"
+        display = ""
+        bar = " ====" * len(grid[0])
+        bar += "\n"
         for x in grid:
-            affichage += barre
+            display += bar
             for xy in x:
                 if xy in [" ", 0]:
-                    affichage += "| 0  "
+                    display += "| 0  "
                 else:
                     if xy < 10:
-                        affichage += "| {}  ".format(xy)
+                        display += "| {}  ".format(xy)
                     elif xy < 100:
-                        affichage += "| {} ".format(xy)
+                        display += "| {} ".format(xy)
                     elif xy < 1000:
-                        affichage += "|{} ".format(xy)
+                        display += "|{} ".format(xy)
                     else:
-                        affichage += "|{}".format(xy)
-            affichage += "|\n"
-        affichage += barre
-        return affichage
+                        display += "|{}".format(xy)
+            display += "|\n"
+        display += bar
+        return display
 
 
 def long_value(grid):
@@ -156,6 +164,7 @@ def grid_to_string_with_size_and_theme(grid, theme, size):
     return affichage
 
 
+# Returns a boolean, True is the grid is full, False otherwise
 def is_full_grid(grid):
     for x in grid:
         for xy in x:
@@ -164,10 +173,11 @@ def is_full_grid(grid):
     return True
 
 
+# Returns current maximum tile value
 def get_grid_tile_max(grid):
-    max = 0
+    max_value = 0
     for x in grid:
         for xy in x:
-            if xy != " " and xy > max:
-                max = xy
-    return max
+            if xy != " " and xy > max_value:
+                max_value = xy
+    return max_value

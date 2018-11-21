@@ -1,21 +1,23 @@
 import copy
 
 
+# Updates a row for a move in left direction
 def move_row_left(row):
     new_row = copy.copy(row)
     for y in range(len(new_row)):
-        if new_row[y]==0 :
+        if new_row[y] == 0:
             new_row[y] = " "
-    limite=0
+    max_value = 0
     for y in range(1, len(new_row)):
         if new_row[y] != 0:
-            while y > 0 and new_row[y - 1] == " " :
+            while y > 0 and new_row[y - 1] == " ":
                 new_row[y - 1], new_row[y] = new_row[y], " "
                 y -= 1
-            if y > limite and new_row[y - 1] == new_row[y]:
+            if y > max_value and new_row[y - 1] == new_row[y]:
                 new_row[y - 1], new_row[y] = 2 * new_row[y - 1], " "
-                limite=y
+                max_value = y
     return new_row
+
 
 def move_row_right(row):
     new_row = copy.copy(row)
@@ -25,6 +27,7 @@ def move_row_right(row):
     return new_row
 
 
+# Updates the grid for a move in direction d
 def move_grid(grid, d):
     new_grid = copy.deepcopy(grid)
     if d == "g":
@@ -48,11 +51,11 @@ def move_grid(grid, d):
     return new_grid
 
 
+# Returns a list of 4 booleans, linked respectively to directions left, right, up, and down, that take the value true
+# if the current grid allows a move in the corresponding direction
 def move_possible(grid):
     size = len(grid)
-    """
-    return boolean for moving in [left, right, up, down] 
-    """
+    # booleans for moving in direction [left, right, up, down]
     moves = [False, False, False, False]
     find = False
     for x in range(size):
@@ -91,6 +94,7 @@ def move_possible(grid):
                 find = True
                 break
     return moves
+
 
 def is_game_over(grid):
     if True in move_possible(grid):
