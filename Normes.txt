@@ -55,3 +55,7 @@ dic_values = {str_value:"sentence"}
 the call function is get_value()
 
 ------------------------------------------------
+
+---Button---
+
+dic_buttons = {str_button:[(x,y), value]}
